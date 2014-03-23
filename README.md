@@ -42,12 +42,12 @@ The entire game is rendered as a 2D canvas. The value ofn
 
 ## Setup for development
 
-`npm install && gulp`
+    npm install && gulp
 
 ## Running tests
 
-`gulp test`
+    gulp test
 
 ## Deploy for production
 
-`gulp deploy`
+    gulp deploy
