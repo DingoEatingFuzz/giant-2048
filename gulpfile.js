@@ -7,6 +7,11 @@ var gulp = require('gulp')
     , jade       = require('gulp-jade')
 ;
 
+var paths = {
+    dev: './build/dev',
+    prod: './build/prod'
+};
+
 gulp.task('default', function() {
     build(true);
     buildLess(true);
@@ -47,28 +52,39 @@ gulp.task('watch', function() {
 });
 
 function build(withDebugging) {
-    return gulp.src('lib/main.js')
-        .pipe(browserify({ debug: withDebugging }))
-        .pipe(gulp.dest('./build/'))
-        .pipe(uglify({ outSourceMap: true }))
-        .pipe(rename('main.min.js'))
-        .pipe(gulp.dest('./build/'));
+    var dest = withDebugging ? paths.dev : paths.prod;
+    var app = gulp.src('lib/main.js')
+        .pipe(browserify({ debug: withDebugging }));
+
+    return withDebugging
+        ? app.pipe(gulp.dest(dest))
+        : app.pipe(uglify({ outSourceMap: true }))
+            .pipe(rename('main.min.js'))
+            .pipe(gulp.dest(dest))
+    ;
 }
 
 function buildLess(withDebugging) {
+    var dest = withDebugging ? paths.dev : paths.prod;
+    var name = withDebugging ? 'styles.css' : 'styles.min.css';
     return gulp.src('less/app.less')
         .pipe(less({
-            compress: true,
+            compress: withDebugging,
             sourceMap: withDebugging
         }))
-        .pipe(rename('styles.min.css'))
-        .pipe(gulp.dest('./build/'));
+        .pipe(rename(name))
+        .pipe(gulp.dest(dest));
 }
 
 function buildJade(withDebugging) {
+    var dest = withDebugging ? paths.dev : paths.prod;
+    var options = {
+        pretty: withDebugging,
+        locals: {
+            inDev: withDebugging
+        }
+    };
     return gulp.src('templates/*')
-        .pipe(jade({
-            pretty: true
-        }))
-        .pipe(gulp.dest('./build/'));
+        .pipe(jade(options))
+        .pipe(gulp.dest(dest));
 }
