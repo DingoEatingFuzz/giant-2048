@@ -15,7 +15,8 @@
     "gulp-karma": "0.0.4",
     "karma-jasmine": "~0.1.5",
     "karma-phantomjs-launcher": "~0.1.2",
-    "gulp-less": "~1.2.3"
+    "gulp-less": "~1.2.3",
+    "gulp-jade": "~0.4.2"
   },
   "scripts": {
     "test": "karma"

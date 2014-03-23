@@ -4,11 +4,13 @@ var gulp = require('gulp')
     , rename     = require('gulp-rename')
     , karma      = require('gulp-karma')
     , less       = require('gulp-less')
+    , jade       = require('gulp-jade')
 ;
 
 gulp.task('default', function() {
     build(true);
     buildLess(true);
+    buildJade(true);
 });
 
 gulp.task('js', function() {
@@ -18,6 +20,10 @@ gulp.task('js', function() {
 gulp.task('less', function() {
     buildLess(true);
 });
+
+gulp.task('jade', function() {
+    buildJade(true);
+})
 
 gulp.task('test', function() {
     return gulp.src([ 'build/main.js', 'test/*.js' ])
@@ -31,11 +37,13 @@ gulp.task('test', function() {
 gulp.task('deploy', function() {
     build();
     buildLess();
+    buildJade();
 });
 
 gulp.task('watch', function() {
     gulp.watch('lib/*', [ 'js' ]);
     gulp.watch('less/*', [ 'less' ]);
+    gulp.watch('templates/*', [ 'jade']);
 });
 
 function build(withDebugging) {
@@ -54,5 +62,13 @@ function buildLess(withDebugging) {
             sourceMap: withDebugging
         }))
         .pipe(rename('styles.min.css'))
+        .pipe(gulp.dest('./build/'));
+}
+
+function buildJade(withDebugging) {
+    return gulp.src('templates/*')
+        .pipe(jade({
+            pretty: true
+        }))
         .pipe(gulp.dest('./build/'));
 }
