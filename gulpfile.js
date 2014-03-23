@@ -3,37 +3,56 @@ var gulp = require('gulp')
     , uglify     = require('gulp-uglify')
     , rename     = require('gulp-rename')
     , karma      = require('gulp-karma')
+    , less       = require('gulp-less')
 ;
 
 gulp.task('default', function() {
-    // build things & watch things
-    return build();
+    build(true);
+    buildLess(true);
+});
+
+gulp.task('js', function() {
+    build(true);
+});
+
+gulp.task('less', function() {
+    buildLess(true);
 });
 
 gulp.task('test', function() {
-    // run karma
     return gulp.src([ 'build/main.js', 'test/*.js' ])
-	.pipe(karma({
-	    configFile: 'karma.conf.js',
-	    action: 'run'
-	}))
-	.on('error', function(err) { throw err; });
+        .pipe(karma({
+            configFile: 'karma.conf.js',
+            action: 'run'
+        }))
+        .on('error', function(err) { throw err; });
 });
 
 gulp.task('deploy', function() {
-    // build and minify things
-    return build()
-	.pipe(uglify({ outSourceMap: true }))
-	.pipe(rename('main.min.js'))
-	.pipe(gulp.dest('./build/'));
+    build();
+    buildLess();
 });
 
 gulp.task('watch', function() {
-    gulp.watch('lib/*', [ 'default' ]);
+    gulp.watch('lib/*', [ 'js' ]);
+    gulp.watch('less/*', [ 'less' ]);
 });
 
-function build() {
+function build(withDebugging) {
     return gulp.src('lib/main.js')
-	.pipe(browserify({ debug: true }))
-	.pipe(gulp.dest('./build/'));
+        .pipe(browserify({ debug: withDebugging }))
+        .pipe(gulp.dest('./build/'))
+        .pipe(uglify({ outSourceMap: true }))
+        .pipe(rename('main.min.js'))
+        .pipe(gulp.dest('./build/'));
+}
+
+function buildLess(withDebugging) {
+    return gulp.src('less/app.less')
+        .pipe(less({
+            compress: true,
+            sourceMap: withDebugging
+        }))
+        .pipe(rename('styles.min.css'))
+        .pipe(gulp.dest('./build/'));
 }
