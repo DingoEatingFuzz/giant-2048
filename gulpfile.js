@@ -5,6 +5,7 @@ var gulp = require('gulp')
     , karma      = require('gulp-karma')
     , less       = require('gulp-less')
     , jade       = require('gulp-jade')
+    , gutil      = require('gulp-util')
 ;
 
 var paths = {
@@ -16,10 +17,12 @@ gulp.task('default', function() {
     build(true);
     buildLess(true);
     buildJade(true);
+    buildTests();
 });
 
 gulp.task('js', function() {
     build(true);
+    buildTests();
 });
 
 gulp.task('less', function() {
@@ -31,12 +34,13 @@ gulp.task('jade', function() {
 })
 
 gulp.task('test', function() {
-    return gulp.src([ 'build/dev/main.js', 'test/*.js' ])
+    buildTests();
+    return gulp.src([ 'build/dev/main.js', 'build/test/*.js' ])
         .pipe(karma({
             configFile: 'karma.conf.js',
             action: 'run'
         }))
-        .on('error', function(err) { throw err; });
+        .on('error', log)
 });
 
 gulp.task('deploy', function() {
@@ -46,15 +50,16 @@ gulp.task('deploy', function() {
 });
 
 gulp.task('watch', function() {
-    gulp.watch('lib/*', [ 'js', 'test' ]);
+    gulp.watch([ 'lib/*', 'test/*' ], [ 'js' ]);
     gulp.watch('less/*', [ 'less' ]);
-    gulp.watch('templates/*', [ 'jade']);
+    gulp.watch('templates/*', [ 'jade' ]);
 });
 
 function build(withDebugging) {
     var dest = withDebugging ? paths.dev : paths.prod;
     var app = gulp.src('lib/main.js')
-        .pipe(browserify({ debug: withDebugging }));
+        .pipe(browserify({ debug: withDebugging }))
+        .on('error', gutil.noop)
 
     return withDebugging
         ? app.pipe(gulp.dest(dest))
@@ -62,6 +67,13 @@ function build(withDebugging) {
             .pipe(rename('main.min.js'))
             .pipe(gulp.dest(dest))
     ;
+}
+
+function buildTests() {
+    return gulp.src('test/*')
+        .pipe(browserify())
+        .on('error', log)
+        .pipe(gulp.dest('./build/test'));
 }
 
 function buildLess(withDebugging) {
@@ -72,10 +84,7 @@ function buildLess(withDebugging) {
             compress: !withDebugging,
             sourceMap: withDebugging
         }))
-        .on('error', function(err) {
-            if (!withDebugging) throw err;
-            console.warn(err.message);
-        })
+        .on('error', log)
         .pipe(rename(name))
         .pipe(gulp.dest(dest));
 }
@@ -90,5 +99,14 @@ function buildJade(withDebugging) {
     };
     return gulp.src('templates/*')
         .pipe(jade(options))
+        .on('error', log)
         .pipe(gulp.dest(dest));
+}
+
+function log(err) {
+    gutil.log(
+        err.stack || err.message,
+        '\n',
+        gutil.colors.magenta(err.path)
+    );
 }

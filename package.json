@@ -17,15 +17,16 @@
     "karma-jasmine": "~0.1.5",
     "karma-phantomjs-launcher": "~0.1.2",
     "gulp-less": "~1.2.3",
-    "gulp-jade": "~0.4.2"
+    "gulp-jade": "~0.4.2",
+    "gulp-util": "~2.2.14"
   },
   "scripts": {
     "test": "karma"
   },
   "author": "Michael Lange",
   "license": "ISC",
-  "repository" : {
+  "repository": {
     "type": "git",
-    "url" : "git://github.com/DingoEatingFuzz/giant-2048.git"
+    "url": "git://github.com/DingoEatingFuzz/giant-2048.git"
   }
 }
