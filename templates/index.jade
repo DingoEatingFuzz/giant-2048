@@ -4,17 +4,21 @@ if inDev
     link(rel='stylesheet', href='styles.css')
 else
     link(rel='stylesheet', href='styles.min.css')
-h1 Giant 2
-    span.blink 0
-    | 48
-p A 4x4 grid is much too small. How about 128x128? 256x256?
-div.scoreboard
-    figure.score
-        h2.record 123095
-        figcaption score
-    figure.high-score
-        h2 123489029
-        figcaption high score
+div.left
+    h1 Gia
+        span.blink2 n
+        | t 2
+        span.blink 0
+        | 48
+    p A 4x4 grid is much too small. How about 128x128? 256x256?
+    div.scoreboard
+        div
+            figure.score
+                h2.record 123095
+                figcaption score
+            figure.high-score
+                h2 123489029
+                figcaption high score
 canvas.game-board
 if inDev
     script(src='main.js')
