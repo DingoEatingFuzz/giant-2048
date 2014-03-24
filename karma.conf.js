@@ -14,8 +14,8 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'build/main.js',
-      'test/*.js'
+      'build/dev/main.js',
+      'build/test/*.js'
     ],
 
 
@@ -27,7 +27,7 @@ module.exports = function(config) {
 
     // test results reporter to use
     // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
-    reporters: ['dots'],
+    reporters: ['story'],
 
 
     // web server port
@@ -44,7 +44,7 @@ module.exports = function(config) {
 
 
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: false,
+    autoWatch: true,
 
 
     // Start these browsers, currently available:

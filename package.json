@@ -18,7 +18,8 @@
     "karma-phantomjs-launcher": "~0.1.2",
     "gulp-less": "~1.2.3",
     "gulp-jade": "~0.4.2",
-    "gulp-util": "~2.2.14"
+    "gulp-util": "~2.2.14",
+    "karma-story-reporter": "~0.2.2"
   },
   "scripts": {
     "test": "karma"
