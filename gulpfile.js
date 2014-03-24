@@ -69,9 +69,13 @@ function buildLess(withDebugging) {
     var name = withDebugging ? 'styles.css' : 'styles.min.css';
     return gulp.src('less/app.less')
         .pipe(less({
-            compress: withDebugging,
+            compress: !withDebugging,
             sourceMap: withDebugging
         }))
+        .on('error', function(err) {
+            if (!withDebugging) throw err;
+            console.warn(err.message);
+        })
         .pipe(rename(name))
         .pipe(gulp.dest(dest));
 }
