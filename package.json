@@ -4,7 +4,8 @@
   "description": "A ridiculous exaggeration to the 2048 game",
   "main": "index.js",
   "dependencies": {
-    "chroma-js": "~0.5.6"
+    "chroma-js": "~0.5.6",
+    "lodash": "~2.4.1"
   },
   "devDependencies": {
     "gulp-browserify": "~0.5.0",
@@ -22,5 +23,9 @@
     "test": "karma"
   },
   "author": "Michael Lange",
-  "license": "ISC"
+  "license": "ISC",
+  "repository" : {
+    "type": "git",
+    "url" : "git://github.com/DingoEatingFuzz/giant-2048.git"
+  }
 }
