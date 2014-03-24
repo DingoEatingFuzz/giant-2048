@@ -19,7 +19,8 @@
     "gulp-less": "~1.2.3",
     "gulp-jade": "~0.4.2",
     "gulp-util": "~2.2.14",
-    "karma-story-reporter": "~0.2.2"
+    "karma-story-reporter": "~0.2.2",
+    "gulp-clean": "~0.2.4"
   },
   "scripts": {
     "test": "karma"

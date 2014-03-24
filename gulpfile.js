@@ -6,6 +6,7 @@ var gulp = require('gulp')
     , less       = require('gulp-less')
     , jade       = require('gulp-jade')
     , gutil      = require('gulp-util')
+    , clean      = require('gulp-clean')
 ;
 
 var paths = {
@@ -31,7 +32,7 @@ gulp.task('less', function() {
 
 gulp.task('jade', function() {
     buildJade(true);
-})
+});
 
 gulp.task('test', function() {
     buildTests();
@@ -40,7 +41,6 @@ gulp.task('test', function() {
             configFile: 'karma.conf.js',
             action: 'run'
         }))
-        .on('error', log)
 });
 
 gulp.task('deploy', function() {
@@ -70,6 +70,8 @@ function build(withDebugging) {
 }
 
 function buildTests() {
+    gulp.src('build/test', { read: false })
+        .pipe(clean({ force: true}));
     return gulp.src('test/*')
         .pipe(browserify())
         .on('error', log)
