@@ -31,7 +31,7 @@ gulp.task('jade', function() {
 })
 
 gulp.task('test', function() {
-    return gulp.src([ 'build/main.js', 'test/*.js' ])
+    return gulp.src([ 'build/dev/main.js', 'test/*.js' ])
         .pipe(karma({
             configFile: 'karma.conf.js',
             action: 'run'
@@ -46,7 +46,7 @@ gulp.task('deploy', function() {
 });
 
 gulp.task('watch', function() {
-    gulp.watch('lib/*', [ 'js' ]);
+    gulp.watch('lib/*', [ 'js', 'test' ]);
     gulp.watch('less/*', [ 'less' ]);
     gulp.watch('templates/*', [ 'jade']);
 });
