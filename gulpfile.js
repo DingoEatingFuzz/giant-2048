@@ -1,12 +1,12 @@
 var gulp = require('gulp')
-    , browserify = require('gulp-browserify')
-    , uglify     = require('gulp-uglify')
-    , rename     = require('gulp-rename')
-    , karma      = require('gulp-karma')
-    , less       = require('gulp-less')
-    , jade       = require('gulp-jade')
-    , gutil      = require('gulp-util')
-    , clean      = require('gulp-clean')
+  , browserify = require('gulp-browserify')
+  , uglify     = require('gulp-uglify')
+  , rename     = require('gulp-rename')
+  , karma      = require('gulp-karma')
+  , less       = require('gulp-less')
+  , jade       = require('gulp-jade')
+  , gutil      = require('gulp-util')
+  , clean      = require('gulp-clean')
 ;
 
 var paths = {
