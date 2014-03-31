@@ -25,9 +25,12 @@
 
 .animation(blink, {
     0%, 1.5%, 10.5% {
-        text-shadow: none;
+        color:#333;
+        .glow(5px, 5px, #000);
     }
     0.5%, 2%, 10%, 11% {
+        color: white;
+        .glow(5px, 5px, #FFF);
         .glow(20px);
     }
 });
@@ -60,6 +63,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
     font:24px / 1 @headingfont;
     color: white;
+    .glow(5px, 5px, #FFF);
     .glow(20px);
     margin-bottom: 0;
 }
